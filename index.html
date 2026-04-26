@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新疆之旅 - 伊犁环线</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f0f2f5;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            padding: 40px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            page-break-after: always;
+            page-break-inside: avoid;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 封面样式 */
+        .slide-cover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        
+        .slide-cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+        
+        .slide-cover h1 {
+            font-size: 4.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .slide-cover .subtitle {
+            font-size: 1.8em;
+            opacity: 0.95;
+            font-weight: 300;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .slide-cover .divider {
+            width: 100px;
+            height: 3px;
+            background: rgba(255,255,255,0.6);
+            margin: 30px auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .slide-cover .date {
+            font-size: 1.3em;
+            margin-top: 20px;
+            opacity: 0.9;
+            line-height: 2;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* 内容页样式 */
+        .slide-white {
+            background: #ffffff;
+        }
+        
+        .slide-light {
+            background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        
+        h2 {
+            font-size: 2.2em;
+            color: #667eea;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #667eea;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        h3 {
+            font-size: 1.5em;
+            color: #764ba2;
+            margin: 20px 0 12px 0;
+            font-weight: 600;
+        }
+        
+        /* Day标签 */
+        .day-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 28px;
+            border-radius: 30px;
+            font-size: 1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        
+        /* 路线信息卡片 */
+        .route-info {
+            background: linear-gradient(135deg, #e8f4f8 0%, #f0e8f8 100%);
+            padding: 20px 25px;
+            border-radius: 12px;
+            margin: 15px 0 25px 0;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            page-break-inside: avoid;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        
+        .route-info strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .route-info p {
+            margin: 6px 0;
+            color: #4a5568;
+        }
+        
+        /* 景点卡片 */
+        .spot-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s, box-shadow 0.2s;
+            page-break-inside: avoid;
+        }
+        
+        .spot-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        
+        .spot-card h4 {
+            font-size: 1.3em;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .spot-card p {
+            color: #4a5568;
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+        
+        .spot-card p strong {
+            color: #764ba2;
+        }
+        
+        /* 图片样式 */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+            align-items: start;
+            page-break-inside: avoid;
+        }
+        
+        .image-gallery-vertical {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+            align-items: start;
+            page-break-inside: avoid;
+        }
+        
+        .spot-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            page-break-inside: avoid;
+        }
+        
+        /* 竖版图片保持原样 */
+        .spot-card img.vertical {
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+            background: #f0f0f0;
+        }
+        
+        /* 左右布局：图片+文字 */
+        .spot-card-horizontal {
+            display: flex;
+            gap: 25px;
+            align-items: flex-start;
+        }
+        
+        .spot-card-horizontal .image-side {
+            flex: 0 0 40%;
+            max-width: 350px;
+        }
+        
+        .spot-card-horizontal .image-side img {
+            width: 100%;
+            height: auto;
+            max-height: 450px;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .spot-card-horizontal .text-side {
+            flex: 1;
+        }
+        
+        .spot-card-horizontal .text-side h4 {
+            margin-top: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .spot-card-horizontal {
+                flex-direction: column;
+            }
+            .spot-card-horizontal .image-side {
+                flex: 1;
+                max-width: 100%;
+            }
+        }
+        
+        .spot-card img:hover {
+            transform: scale(1.02);
+        }
+        
+        .image-placeholder {
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+            border: 2px dashed #a0aec0;
+            border-radius: 10px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #718096;
+            font-size: 0.95em;
+            margin: 15px 0;
+        }
+        
+        /* 提示框 */
+        .tips-box {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-left: 5px solid #f59e0b;
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(245, 158, 11, 0.1);
+            page-break-inside: avoid;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        
+        .tips-box h4 {
+            color: #b45309;
+            margin-bottom: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tips-box ul {
+            margin-left: 20px;
+            color: #92400e;
+        }
+        
+        .tips-box li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+        
+        /* 高亮框 */
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-radius: 12px;
+            padding: 22px;
+            margin: 20px 0;
+            border: 1px solid #667eea30;
+            page-break-inside: avoid;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        
+        .highlight-box h4 {
+            color: #667eea;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .highlight-box p {
+            color: #4a5568;
+            line-height: 1.8;
+        }
+        
+        /* 行李清单网格 */
+        .packing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .packing-category {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
+            page-break-inside: avoid;
+        }
+        
+        .packing-category h4 {
+            color: #764ba2;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .packing-category ul {
+            list-style: none;
+        }
+        
+        .packing-category li {
+            padding: 6px 0;
+            color: #4a5568;
+            font-size: 0.95em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .packing-category li::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        /* 时间轴 */
+        .timeline {
+            position: relative;
+            padding-left: 35px;
+            margin: 20px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 22px;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            page-break-inside: avoid;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 20px;
+            width: 14px;
+            height: 14px;
+            background: #667eea;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #667eea;
+        }
+        
+        .timeline-time {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .timeline-item strong {
+            color: #667eea;
+            font-size: 1.05em;
+        }
+        
+        .timeline-item small {
+            color: #718096;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        /* 天气提示 */
+        .weather-note {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border-left: 5px solid #10b981;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+            color: #065f46;
+            page-break-inside: avoid;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        
+        .weather-note strong {
+            color: #047857;
+        }
+        
+        /* 警告框 */
+        .warning-box {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-left: 5px solid #ef4444;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 15px 0;
+            color: #991b1b;
+            page-break-inside: avoid;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        
+        .warning-box strong {
+            color: #b91c1c;
+        }
+        
+        /* 结束页 */
+        .footer-slide {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .footer-slide h2 {
+            color: white;
+            border-bottom-color: rgba(255,255,255,0.4);
+            justify-content: center;
+        }
+        
+        /* 费用表格样式 */
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.95em;
+            page-break-inside: avoid;
+        }
+        
+        .cost-table th {
+            background: #f1f5f9;
+            padding: 14px;
+            text-align: left;
+            border-bottom: 2px solid #cbd5e0;
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .cost-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #4a5568;
+        }
+        
+        .cost-table tr:hover {
+            background: #f8fafc;
+        }
+        
+        .cost-table .total-row {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            font-weight: 600;
+        }
+        
+        .cost-table .total-row td {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        /* 汇总页特殊样式 */
+        .summary-card {
+            background: rgba(255,255,255,0.98);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+        
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            page-break-inside: avoid;
+        }
+        
+        .summary-table td {
+            padding: 18px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 1.1em;
+        }
+        
+        .summary-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .summary-table .grand-total {
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #764ba2;
+        }
+        
+        /* 响应式 */
+        @media print {
+            body {
+                font-size: 11pt;
+                line-height: 1.4;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            .slide {
+                page-break-after: always;
+                page-break-inside: avoid;
+                padding: 20px 30px;
+                min-height: auto;
+                height: auto;
+                overflow: visible;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            .slide-cover {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            .slide-cover h1 {
+                font-size: 3em;
+            }
+            
+            .slide-cover .subtitle {
+                font-size: 1.4em;
+            }
+            
+            h2 {
+                font-size: 1.6em;
+                margin-bottom: 15px;
+            }
+            
+            h3 {
+                font-size: 1.2em;
+            }
+            
+            .spot-card {
+                page-break-inside: avoid;
+                padding: 15px;
+                margin: 10px 0;
+            }
+            
+            .spot-card img {
+                height: 150px;
+                page-break-inside: avoid;
+            }
+            
+            .packing-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+            
+            .packing-category {
+                page-break-inside: avoid;
+                padding: 12px;
+            }
+            
+            .timeline-item {
+                page-break-inside: avoid;
+                margin-bottom: 12px;
+                padding: 10px 15px;
+            }
+            
+            .tips-box, .warning-box, .highlight-box, .weather-note, .route-info {
+                page-break-inside: avoid;
+                padding: 12px 15px;
+                margin: 10px 0;
+            }
+            
+            table, .cost-table, .summary-table {
+                page-break-inside: avoid;
+                font-size: 9pt;
+            }
+            
+            tr {
+                page-break-inside: avoid;
+            }
+            
+            .image-gallery, .image-gallery-vertical {
+                page-break-inside: avoid;
+                gap: 10px;
+            }
+            
+            img {
+                page-break-inside: avoid;
+            }
+            
+            .day-badge {
+                padding: 6px 18px;
+                font-size: 0.85em;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px;
+            }
+            .slide-cover h1 {
+                font-size: 2.8em;
+                letter-spacing: 4px;
+            }
+            h2 {
+                font-size: 1.6em;
+            }
+            .packing-grid {
+                grid-template-columns: 1fr;
+            }
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 封面 -->
+<div class="slide slide-cover">
+    <h1>新疆之旅</h1>
+    <div class="subtitle">伊犁环线 · 9天深度游</div>
+    <div class="divider"></div>
+    <div class="date">
+        2026年5月29日 - 6月6日<br>
+        丹丹 & 婷婷 & 莲莲 & 小黑<br>
+        4人包车
+    </div>
+</div>
+
+<!-- 行程概览 -->
+<div class="slide slide-white">
+    <h2>📍 行程概览</h2>
+    
+    <div class="highlight-box">
+        <h4>🗺️ 总路线</h4>
+        <p>乌鲁木齐 → 赛里木湖 → 果子沟 → 昭苏 → 夏塔 → 特克斯 → 喀拉峻 → 库尔德宁 → 那拉提 → 独库公路 → 奎屯 → 天山天池 → 乌鲁木齐</p>
+    </div>
+    
+    <div class="timeline">
+        <div class="timeline-item">
+            <span class="timeline-time">DAY 1</span><br>
+            <strong>5月29日：飞往乌鲁木齐</strong><br>
+            <small>✈️ 抵达乌鲁木齐，住一晚休整</small>
+        </div>
+        <div class="timeline-item">
+            <span class="timeline-time">DAY 2</span><br>
+            <strong>5月30日：乌鲁木齐 → 赛里木湖</strong>（550km，约6小时）<br>
+            <small>🚐 开始包车游玩，住赛里木湖，看日落/星空</small>
+        </div>
+        <div class="timeline-item">
+            <span class="timeline-time">DAY 3</span><br>
+            <strong>5月31日：赛里木湖环湖 → 果子沟大桥 → 昭苏</strong>（323km，约4.5小时）<br>
+            <small>🏨 住昭苏，草原风光</small>
+        </div>
+        <div class="timeline-item">
+            <span class="timeline-time">DAY 4</span><br>
+            <strong>6月1日：昭苏 → 夏塔 → 特克斯</strong>（214km，约3小时）<br>
+            <small>🏨 住特克斯八卦城，远观冰川</small>
+        </div>
+        <div class="timeline-item">
+            <span class="timeline-time">DAY 5</span><br>
+            <strong>6月2日：特克斯 → 喀拉峻 → 库尔德宁镇</strong>（138km，约3小时）<br>
+            <small>🏨 住库尔德宁，人体草原</small>
+        </div>
+        <div class="timeline-item">
+            <span class="timeline-time">DAY 6</span><br>
+            <strong>6月3日：库尔德宁 → 那拉提</strong>（146km，约3小时）<br>
+            <small>🏨 住那拉提，空中草原</small>
+        </div>
+        <div class="timeline-item">
+            <span class="timeline-time">DAY 7</span><br>
+            <strong>6月4日：那拉提 → 独库公路北段 → 奎屯</strong>（260km，约5小时）<br>
+            <small>🏨 住奎屯，穿越天山</small>
+        </div>
+        <div class="timeline-item">
+            <span class="timeline-time">DAY 8</span><br>
+            <strong>6月5日：奎屯 → 天山天池 → 乌鲁木齐</strong>（355km，约4小时）<br>
+            <small>🏨 结束包车，返回乌鲁木齐住一晚</small>
+        </div>
+        <div class="timeline-item">
+            <span class="timeline-time">DAY 9</span><br>
+            <strong>6月6日：乌鲁木齐</strong><br>
+            <small>✈️ 飞回，结束行程</small>
+        </div>
+    </div>
+    
+    <div class="route-info">
+        <p><strong>📊 总里程：</strong>约 1986 公里</p>
+        <p><strong>⏱️ 总车程：</strong>约 28.5 小时（不含游玩）</p>
+        <p><strong>🚐 出行方式：</strong>4人包车，配司导</p>
+    </div>
+</div>
+
+<!-- 出行准备 -->
+<div class="slide slide-light">
+    <h2>🎒 出行准备</h2>
+    
+    <div class="packing-grid">
+        <div class="packing-category">
+            <h4>👕 衣物</h4>
+            <ul>
+                <li>短袖/薄长袖（白天）</li>
+                <li>冲锋衣/薄羽绒服（早晚）</li>
+                <li>防晒衣</li>
+                <li>舒适运动鞋</li>
+                <li>帽子、墨镜</li>
+                <li>围巾（防风/拍照）</li>
+            </ul>
+        </div>
+        <div class="packing-category">
+            <h4>☀️ 防晒护肤</h4>
+            <ul>
+                <li>高倍防晒霜（SPF50+）</li>
+                <li>保湿面霜/面膜</li>
+                <li>润唇膏</li>
+                <li>护手霜</li>
+            </ul>
+        </div>
+        <div class="packing-category">
+            <h4>💊 药品</h4>
+            <ul>
+                <li>肠胃药</li>
+                <li>感冒药</li>
+                <li>晕车药</li>
+                <li>创可贴</li>
+                <li>驱蚊水</li>
+                <li>个人常用药</li>
+            </ul>
+        </div>
+        <div class="packing-category">
+            <h4>📱 电子设备</h4>
+            <ul>
+                <li>充电宝</li>
+                <li>充电器</li>
+                <li>相机+备用电池</li>
+                <li>无人机（包车赠送无人机拍摄）</li>
+            </ul>
+        </div>
+        <div class="packing-category">
+            <h4>🍫 食品</h4>
+            <ul>
+                <li>零食/能量棒</li>
+                <li>矿泉水/保温杯</li>
+                <li>享受当地美食</li>
+            </ul>
+        </div>
+        <div class="packing-category">
+            <h4>📋 证件</h4>
+            <ul>
+                <li>身份证</li>
+                <li>现金（少量）</li>
+                <li>酒店预订确认单</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="weather-note">
+        <strong>🌡️ 5月底新疆气温：</strong>白天 20-28°C，早晚 5-15°C，赛湖/独库垭口可能 0°C 以下。穿衣法则：洋葱式 layering！
+    </div>
+</div>
+
+<!-- Day 1 -->
+<div class="slide slide-white">
+    <span class="day-badge">DAY 1</span>
+    <h2>乌鲁木齐 → 赛里木湖</h2>
+    
+    <div class="route-info">
+        <p><strong>🚐 包车行程：</strong>550公里，约6小时</p>
+        <p><strong>🏨 住宿：</strong>赛里木湖景区内/东门附近</p>
+        <p><strong>🌅 亮点：</strong>大西洋最后一滴眼泪、日落、星空</p>
+    </div>
+    
+    <div class="spot-card">
+        <h4>🌊 赛里木湖</h4>
+        <div class="image-gallery">
+            <img src=" 新疆之旅图片/赛里木湖-1.jpg" alt="赛里木湖">
+            <img src=" 新疆之旅图片/赛里木湖-2.jpg" alt="赛里木湖风光">
+        </div>
+        <p><strong>简介：</strong>新疆海拔最高、面积最大的高山湖泊，被称为"大西洋最后一滴眼泪"。5月底湖水湛蓝，可能还有残冰，景色绝美。</p>
+        <p><strong>门票：</strong>200元/人（无需负责司导自驾票）</p>
+        <p><strong>游玩建议：</strong>东门进，逆时针环湖，重点停留：月亮湾、点将台、克勒涌珠、松树头</p>
+        <p><strong>日落时间：</strong>约 21:30，可在松树头或点将台看日落</p>
+    </div>
+    
+    <div class="tips-box">
+        <h4>⚠️ D1 注意事项</h4>
+        <ul>
+            <li>如果飞机中午后才到乌鲁木齐，建议D1住精河或奎屯，D2一早去赛湖</li>
+            <li>赛湖景区内住宿较贵且条件一般，也可住东门外的酒店</li>
+            <li>湖边风大，即使夏天也要带厚外套</li>
+            <li>晚上可以看星空，光污染很少</li>
+            <li>包车优势：可以和司机商量沿途停车拍照点</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Day 2 -->
+<div class="slide slide-light">
+    <span class="day-badge">DAY 2</span>
+    <h2>赛里木湖 → 果子沟 → 昭苏</h2>
+    
+    <div class="route-info">
+        <p><strong>🚐 包车行程：</strong>323公里，约4.5小时</p>
+        <p><strong>🏨 住宿：</strong>昭苏县城</p>
+        <p><strong>🌉 亮点：</strong>果子沟大桥、赛湖日出、昭苏草原</p>
+    </div>
+    
+    <div class="spot-card">
+        <h4>🌅 赛里木湖日出</h4>
+        <div class="image-gallery">
+            <img src=" 新疆之旅图片/赛里木湖日出-1.jpg" alt="赛里木湖日出">
+            <img src=" 新疆之旅图片/赛里木湖日出-2.jpg" alt="赛里木湖日出">
+        </div>
+        <p><strong>日出时间：</strong>约 06:30</p>
+        <p><strong>最佳观景点：</strong>点将台、克勒涌珠</p>
+        <p><strong>提示：</strong>早起看日出非常值！湖面晨雾+金色阳光，绝美</p>
+    </div>
+    
+    <div class="spot-card">
+        <h4>🌉 果子沟大桥</h4>
+        <img src=" 新疆之旅图片/果子沟大桥.jpg" alt="果子沟大桥">
+        <p><strong>简介：</strong>新疆第一高桥，双塔双索面钢桁梁斜拉桥，横跨果子沟峡谷，非常壮观。</p>
+        <p><strong>最佳拍摄点：</strong>出赛湖往伊宁方向，有专门的观景台</p>
+        <p><strong>提示：</strong>桥上不能停车，观景台可以拍全景</p>
+    </div>
+    
+    <div class="spot-card">
+        <h4>🌿 昭苏</h4>
+        <img src=" 新疆之旅图片/昭苏.jpg" alt="昭苏草原">
+        <p><strong>简介：</strong>"中国天马之乡"，5月底草原开始变绿，可以看到成群的伊犁马。</p>
+        <p><strong>特色：</strong>如果运气好，能看到天马浴河表演（通常6月开始）</p>
+    </div>
+    
+    <div class="tips-box">
+        <h4>⚠️ D2 注意事项</h4>
+        <ul>
+            <li>赛湖日出约6:30，看完日出后环湖半圈再出发</li>
+            <li>果子沟到伊宁段风景很好，可以慢慢开</li>
+            <li>昭苏海拔较高（约1800米），注意保暖</li>
+            <li>昭苏的土豆和羊肉很有名，晚餐可以试试</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Day 3 -->
+<div class="slide slide-white">
+    <span class="day-badge">DAY 3</span>
+    <h2>昭苏 → 夏塔 → 特克斯</h2>
+    
+    <div class="route-info">
+        <p><strong>🚐 包车行程：</strong>214公里，约3小时</p>
+        <p><strong>🏨 住宿：</strong>特克斯八卦城</p>
+        <p><strong>🏔️ 亮点：</strong>夏塔古道、木扎尔特冰川、八卦城</p>
+    </div>
+    
+    <div class="spot-card spot-card-horizontal">
+        <div class="image-side">
+            <img src=" 新疆之旅图片/夏塔.jpg" alt="夏塔">
+        </div>
+        <div class="text-side">
+            <h4>🏔️ 夏塔旅游区</h4>
+            <p><strong>简介：</strong>古代伊犁至阿克苏的交通驿站，唐僧取经曾路过此地。景区内有草原、森林、冰川，可以近距离观看木扎尔特冰川。</p>
+            <p><strong>门票：</strong>200元/人（无需负责司导自驾票）</p>
+            <p><strong>游玩方式：</strong>区间车→温泉酒店→电瓶车/骑马/徒步→冰川观景台</p>
+            <p><strong>建议时长：</strong>4-6小时</p>
+        </div>
+    </div>
+    
+    <div class="spot-card spot-card-horizontal">
+        <div class="image-side">
+            <img src=" 新疆之旅图片/夏塔2.jpg" alt="夏塔2">
+        </div>
+        <div class="text-side">
+            <h4>🏔️ 木扎尔特冰川</h4>
+            <p><strong>特色：</strong>夏塔古道的终点，可以近距离观赏壮观的冰川景色。徒步或骑马约2-3小时可达观景台。</p>
+            <p><strong>提示：</strong>海拔较高，注意保暖和高原反应，量力而行。</p>
+        </div>
+    </div>
+    
+    <div class="spot-card spot-card-horizontal">
+        <div class="image-side">
+            <img src=" 新疆之旅图片/特克斯.jpg" alt="特克斯八卦城">
+        </div>
+        <div class="text-side">
+            <h4>🏘️ 特克斯八卦城</h4>
+            <p><strong>简介：</strong>世界唯一保存完整的八卦城，城市布局呈八卦形状，没有红绿灯。</p>
+            <p><strong>特色：</strong>可以登上八卦城中心塔俯瞰全城，晚上亮灯后更好看</p>
+            <p><strong>美食：</strong>离街有很多特色餐厅和民宿</p>
+        </div>
+    </div>
+    
+    <div class="tips-box">
+        <h4>⚠️ D3 注意事项</h4>
+        <ul>
+            <li>夏塔景区较大，建议早出发（8:00前）</li>
+            <li>景区内手机信号弱，提前下载离线地图</li>
+            <li>到冰川观景台需要骑马或徒步，约2-3小时，量力而行</li>
+            <li>特克斯八卦城晚上值得逛，离街有夜市</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Day 4 -->
+<div class="slide slide-light">
+    <span class="day-badge">DAY 4</span>
+    <h2>特克斯 → 喀拉峻 → 库尔德宁</h2>
+    
+    <div class="route-info">
+        <p><strong>🚐 包车行程：</strong>138公里，约3小时</p>
+        <p><strong>🏨 住宿：</strong>库尔德宁镇</p>
+        <p><strong>🌾 亮点：</strong>喀拉峻人体草原、库尔德宁雪岭云杉</p>
+    </div>
+    
+    <div class="spot-card">
+        <h4>🌾 喀拉峻草原</h4>
+        <img src=" 新疆之旅图片/喀拉峻.jpg" alt="喀拉峻草原">
+        <p><strong>简介：</strong>世界自然遗产，"喀拉峻"在哈萨克语中意为"黑色肥沃的莽原"。著名的"人体草原"就在此处，曲线优美如人体。</p>
+        <p><strong>门票：</strong>150元/人（无需负责司导自驾票）</p>
+        <p><strong>最佳时间：</strong>傍晚时分，光线柔和，草原线条最美</p>
+        <p><strong>游玩点：</strong>鲜花台、猎鹰台、三级夷平面观景台</p>
+    </div>
+    
+    <div class="spot-card spot-card-horizontal">
+        <div class="image-side">
+            <img src=" 新疆之旅图片/库尔德宁2.jpg" alt="库尔德宁">
+        </div>
+        <div class="text-side">
+            <h4>🌲 库尔德宁</h4>
+            <p><strong>简介：</strong>雪岭云杉的故乡，被誉为"天山最美的绿谷"。这里是天山山脉森林最繁茂的地方。</p>
+            <p><strong>门票：</strong>100元/人（无需负责司导自驾票）</p>
+            <p><strong>特色：</strong>云杉林、雪山、草原组合，人少景美</p>
+        </div>
+    </div>
+    
+    <div class="tips-box">
+        <h4>⚠️ D4 注意事项</h4>
+        <ul>
+            <li>喀拉峻和那拉提风格类似，如果时间紧可以二选一</li>
+            <li>喀拉峻的区间车路程较长，预留足够时间</li>
+            <li>人体草原最佳拍摄时间是日落前2小时</li>
+            <li>库尔德宁相对小众，住宿选择较少，提前预订</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Day 5 -->
+<div class="slide slide-white">
+    <span class="day-badge">DAY 5</span>
+    <h2>库尔德宁 → 那拉提</h2>
+    
+    <div class="route-info">
+        <p><strong>🚐 包车行程：</strong>146公里，约3小时</p>
+        <p><strong>🏨 住宿：</strong>那拉提镇/景区</p>
+        <p><strong>🌸 亮点：</strong>那拉提空中草原、哈萨克民俗</p>
+    </div>
+    
+    <div class="spot-card spot-card-horizontal">
+        <div class="image-side">
+            <img src=" 新疆之旅图片/那拉提草原.jpg" alt="那拉提草原">
+        </div>
+        <div class="text-side">
+            <h4>🌸 那拉提旅游风景区</h4>
+            <p><strong>简介：</strong>世界四大草原之一，"那拉提"意为"最先见到太阳的地方"。分为空中草原、河谷草原、盘龙谷道三条线路。</p>
+            <p><strong>门票：</strong>200元/人（需负责司导自驾票200元）</p>
+            <p><strong>推荐线路：</strong></p>
+            <p>• 空中草原线：最经典，草原+雪山景观</p>
+            <p>• 河谷草原线：森林+溪流，适合徒步</p>
+            <p>• 盘龙谷道：自驾线路，风景原始</p>
+        </div>
+    </div>
+    
+    <div class="spot-card spot-card-horizontal">
+        <div class="image-side">
+            <img src=" 新疆之旅图片/那拉提草原2.jpg" alt="那拉提草原2">
+        </div>
+        <div class="text-side">
+            <h4>🌸 空中草原</h4>
+            <p><strong>特色：</strong>那拉提最著名的景观，草原如绿毯般铺展，远处雪山耸立，哈萨克牧民的毡房点缀其间。</p>
+            <p><strong>最佳时间：</strong>清晨或傍晚，光线柔和，适合拍照</p>
+        </div>
+    </div>
+    
+    <div class="spot-card spot-card-horizontal">
+        <div class="image-side">
+            <img src=" 新疆之旅图片/哈萨克毡房.jpg" alt="哈萨克毡房">
+        </div>
+        <div class="text-side">
+            <h4>🎪 哈萨克民俗</h4>
+            <p><strong>体验：</strong>可以住哈萨克毡房，吃手抓肉、喝奶茶，看民族歌舞表演</p>
+            <p><strong>骑马：</strong>草原上可以骑马，约50-100元/小时</p>
+        </div>
+    </div>
+    
+    <div class="tips-box">
+        <h4>⚠️ D5 注意事项</h4>
+        <ul>
+            <li>那拉提是成熟景区，商业化程度较高，人也较多</li>
+            <li>建议早上去空中草原，下午光线太强</li>
+            <li>景区内有正规毡房住宿，想体验可以住一晚</li>
+            <li>那拉提的蜂蜜很有名，可以买点带回去</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Day 6 -->
+<div class="slide slide-light">
+    <span class="day-badge">DAY 6</span>
+    <h2>那拉提 → 独库公路 → 奎屯</h2>
+    
+    <div class="route-info">
+        <p><strong>🚐 包车行程：</strong>260公里，约5小时</p>
+        <p><strong>🏨 住宿：</strong>奎屯市</p>
+        <p><strong>🛣️ 亮点：</strong>独库公路北段、天山风光</p>
+    </div>
+    
+    <div class="spot-card spot-card-horizontal">
+        <div class="image-side">
+            <img src=" 新疆之旅图片/独库公路1.jpg" alt="独库公路">
+        </div>
+        <div class="text-side">
+            <h4>🛣️ 独库公路（G217）</h4>
+            <p><strong>简介：</strong>连接南北疆的国防公路，全长561公里，穿越天山，一年只开放4个月（通常6-10月），被称为"中国最美公路"。</p>
+            <p><strong>北段风景：</strong>那拉提→乔尔玛→独山子，翻越哈希勒根达坂（海拔3390米）</p>
+            <p><strong>沿途景点：</strong>乔尔玛烈士陵园、哈希勒根隧道、天瀑、老虎口</p>
+        </div>
+    </div>
+    
+    <div class="warning-box">
+        <strong>⚠️ 重要提醒：独库公路通车情况</strong><br>
+        • 2024年是6月1日通车的<br>
+        • 2026年通车时间待定，通常在5月底-6月初<br>
+        • <strong>出发前务必确认！</strong>关注"新疆交警"公众号<br>
+        • 如未通车，需绕行：那拉提→伊宁→果子沟→乌鲁木齐（多约300公里）
+    </div>
+    
+    <div class="tips-box">
+        <h4>⚠️ D6 注意事项</h4>
+        <ul>
+            <li>独库公路全程限速40-60km/h，不要催促司机超速</li>
+            <li>山上天气多变，可能突降大雪，备好厚外套</li>
+            <li>乔尔玛有服务区，可以休息吃饭</li>
+            <li>哈希勒根达坂可能有积雪，注意保暖</li>
+            <li>独库公路沿途厕所较少，提前准备</li>
+            <li>包车优势：司导熟悉路况，安全第一</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Day 7 -->
+<div class="slide slide-white">
+    <span class="day-badge">DAY 7</span>
+    <h2>奎屯 → 天山天池 → 乌鲁木齐</h2>
+    
+    <div class="route-info">
+        <p><strong>🚐 包车行程：</strong>355公里，约4小时</p>
+        <p><strong>✈️ 结束：</strong>返回乌鲁木齐，行程结束</p>
+        <p><strong>🏔️ 亮点：</strong>天山天池、博格达峰</p>
+    </div>
+    
+    <div class="spot-card spot-card-horizontal">
+        <div class="image-side">
+            <img src=" 新疆之旅图片/天池.jpg" alt="天山天池">
+        </div>
+        <div class="text-side">
+            <h4>🏔️ 天山天池</h4>
+            <p><strong>简介：</strong>古称"瑶池"，传说中西王母沐浴的地方。湖水清澈，倒映着博格达峰，风景秀丽。</p>
+            <p><strong>门票：</strong>100元/人（无需负责司导自驾票）</p>
+            <p><strong>游玩时间：</strong>3-4小时</p>
+            <p><strong>景点：</strong>天池湖面、定海神针（大榆树）、西王母庙、马牙山（可乘索道）</p>
+        </div>
+    </div>
+    
+    <div class="tips-box">
+        <h4>⚠️ D7 注意事项</h4>
+        <ul>
+            <li>天池是成熟景区，游客较多，建议早去避开人流</li>
+            <li>如果赶飞机，要算好时间（天池到机场约1.5小时）</li>
+            <li>天池海拔约1900米，比市区凉，带件外套</li>
+            <li>如果时间紧张，也可以跳过天池直接回乌鲁木齐市区</li>
+        </ul>
+    </div>
+</div>
+
+<!-- 费用预算 - 交通 -->
+<div class="slide slide-light">
+    <h2>💰 费用预算（一）交通</h2>
+    
+    <div class="spot-card">
+        <table class="cost-table">
+            <tr>
+                <th>项目</th>
+                <th>单价/说明</th>
+                <th>4人小计</th>
+                <th>平均每人</th>
+            </tr>
+            <tr>
+                <td>往返机票</td>
+                <td>4000元/人 × 4人</td>
+                <td>16000元</td>
+                <td>4000元</td>
+            </tr>
+            <tr>
+                <td>7天包车（含司导食宿）</td>
+                <td>一口价（含司导食宿）</td>
+                <td>10500元</td>
+                <td>2625元</td>
+            </tr>
+            <tr class="total-row">
+                <td>交通小计</td>
+                <td>-</td>
+                <td>26500元</td>
+                <td>6625元</td>
+            </tr>
+        </table>
+    </div>
+    
+    <h2>💰 费用预算（二）住宿</h2>
+    
+    <div class="spot-card">
+        <table class="cost-table">
+            <tr>
+                <th>日期</th>
+                <th>地点</th>
+                <th>4人预估</th>
+                <th>平均每人</th>
+            </tr>
+            <tr>
+                <td>D1（5月29日）</td>
+                <td>乌鲁木齐（第一晚）</td>
+                <td>300-400元/间 × 2间</td>
+                <td>150-200元</td>
+            </tr>
+            <tr>
+                <td>D2（5月30日）</td>
+                <td>赛里木湖</td>
+                <td>400-600元/间 × 2间</td>
+                <td>200-300元</td>
+            </tr>
+            <tr>
+                <td>D3（5月31日）</td>
+                <td>昭苏</td>
+                <td>300-400元/间 × 2间</td>
+                <td>150-200元</td>
+            </tr>
+            <tr>
+                <td>D4（6月1日）</td>
+                <td>特克斯</td>
+                <td>300-400元/间 × 2间</td>
+                <td>150-200元</td>
+            </tr>
+            <tr>
+                <td>D5（6月2日）</td>
+                <td>库尔德宁</td>
+                <td>250-350元/间 × 2间</td>
+                <td>125-175元</td>
+            </tr>
+            <tr>
+                <td>D6（6月3日）</td>
+                <td>那拉提</td>
+                <td>400-600元/间 × 2间</td>
+                <td>200-300元</td>
+            </tr>
+            <tr>
+                <td>D7（6月4日）</td>
+                <td>奎屯</td>
+                <td>300-400元/间 × 2间</td>
+                <td>150-200元</td>
+            </tr>
+            <tr>
+                <td>D8（6月5日）</td>
+                <td>乌鲁木齐（返程前一晚）</td>
+                <td>300-400元/间 × 2间</td>
+                <td>150-200元</td>
+            </tr>
+            <tr class="total-row">
+                <td>住宿小计（8晚）</td>
+                <td>-</td>
+                <td>4500-6500元</td>
+                <td>1125-1625元</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- 费用预算 - 门票餐饮 -->
+<div class="slide slide-white">
+    <h2>💰 费用预算（三）门票</h2>
+    
+    <div class="spot-card">
+        <table class="cost-table">
+            <tr>
+                <th>景区</th>
+                <th>单价</th>
+                <th>4人合计</th>
+                <th>平均每人</th>
+                <th>司导票</th>
+            </tr>
+            <tr>
+                <td>赛里木湖</td>
+                <td>200元</td>
+                <td>800元</td>
+                <td>200元</td>
+                <td style="color: #10b981;">无需</td>
+            </tr>
+            <tr>
+                <td>夏塔景区</td>
+                <td>200元</td>
+                <td>800元</td>
+                <td>200元</td>
+                <td style="color: #10b981;">无需</td>
+            </tr>
+            <tr>
+                <td>喀拉峻草原</td>
+                <td>150元</td>
+                <td>600元</td>
+                <td>150元</td>
+                <td style="color: #10b981;">无需</td>
+            </tr>
+            <tr>
+                <td>库尔德宁</td>
+                <td>100元</td>
+                <td>400元</td>
+                <td>100元</td>
+                <td style="color: #10b981;">无需</td>
+            </tr>
+            <tr>
+                <td>那拉提</td>
+                <td>200元</td>
+                <td>800元</td>
+                <td>200元</td>
+                <td style="color: #f59e0b;">需付200元</td>
+            </tr>
+            <tr>
+                <td>天山天池</td>
+                <td>100元</td>
+                <td>400元</td>
+                <td>100元</td>
+                <td style="color: #10b981;">无需</td>
+            </tr>
+            <tr class="total-row">
+                <td>门票小计</td>
+                <td>-</td>
+                <td>3800元</td>
+                <td>950元</td>
+                <td>+200元</td>
+            </tr>
+        </table>
+    </div>
+    
+    <h2>💰 费用预算（四）餐饮</h2>
+    
+    <div class="spot-card">
+        <table class="cost-table">
+            <tr>
+                <th>项目</th>
+                <th>标准</th>
+                <th>9天合计</th>
+                <th>平均每人</th>
+            </tr>
+            <tr>
+                <td>早餐</td>
+                <td>20元/人 × 4人</td>
+                <td>720元</td>
+                <td>180元</td>
+            </tr>
+            <tr>
+                <td>午餐</td>
+                <td>50元/人 × 4人</td>
+                <td>1800元</td>
+                <td>450元</td>
+            </tr>
+            <tr>
+                <td>晚餐</td>
+                <td>80元/人 × 4人</td>
+                <td>2880元</td>
+                <td>720元</td>
+            </tr>
+            <tr>
+                <td>零食/水果/水</td>
+                <td>约100元/天</td>
+                <td>900元</td>
+                <td>225元</td>
+            </tr>
+            <tr class="total-row">
+                <td>餐饮小计</td>
+                <td>约100元/人/天 × 9天</td>
+                <td>6300元</td>
+                <td>1575元</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- 费用汇总 -->
+<div class="slide slide-white">
+    <h2>📊 费用汇总</h2>
+    
+    <div class="summary-card" style="background: linear-gradient(135deg, #667eea08 0%, #764ba208 100%); border: 2px solid #667eea30;">
+        <table class="summary-table">
+            <tr>
+                <td style="font-size: 1.1em;">项目</td>
+                <td style="text-align: right; font-weight: 600; color: #4a5568;">4人合计</td>
+                <td style="text-align: right; font-weight: 600; color: #4a5568;">平均每人</td>
+            </tr>
+            <tr>
+                <td style="font-size: 1.1em;">🚐 交通（机票+包车）</td>
+                <td style="text-align: right; font-weight: 600; color: #4a5568;">26500元</td>
+                <td style="text-align: right; font-weight: 600; color: #4a5568;">6625元</td>
+            </tr>
+            <tr>
+                <td style="font-size: 1.1em;">🏨 住宿（8晚）</td>
+                <td style="text-align: right; font-weight: 600; color: #4a5568;">4500-6500元</td>
+                <td style="text-align: right; font-weight: 600; color: #4a5568;">1125-1625元</td>
+            </tr>
+            <tr>
+                <td style="font-size: 1.1em;">🎫 门票（含司导票）</td>
+                <td style="text-align: right; font-weight: 600; color: #4a5568;">4000元</td>
+                <td style="text-align: right; font-weight: 600; color: #4a5568;">1000元</td>
+            </tr>
+            <tr>
+                <td style="font-size: 1.1em;">🍖 餐饮（9天）</td>
+                <td style="text-align: right; font-weight: 600; color: #4a5568;">6300元</td>
+                <td style="text-align: right; font-weight: 600; color: #4a5568;">1575元</td>
+            </tr>
+            <tr>
+                <td style="font-size: 1.1em;">🛒 其他（骑马/特产/备用）</td>
+                <td style="text-align: right; font-weight: 600; color: #4a5568;">2500-3500元</td>
+                <td style="text-align: right; font-weight: 600; color: #4a5568;">625-875元</td>
+            </tr>
+            <tr class="grand-total">
+                <td>💰 总计</td>
+                <td style="text-align: right;">42300-46300元</td>
+                <td style="text-align: right;">10575-11575元</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="highlight-box" style="margin-top: 25px;">
+        <h4>💡 省钱小贴士</h4>
+        <p>• 机票提前1-2个月预订更便宜 &nbsp;&nbsp;• 有导游证、军官证等优惠证件记得带上</p>
+        <p>• 部分景区网上提前订票可能有优惠 &nbsp;&nbsp;• 包车价格可和司机协商，淡旺季差异大</p>
+    </div>
+</div>
+
+<!-- 美食推荐 -->
+<div class="slide slide-light">
+    <h2>🍖 新疆美食推荐</h2>
+    
+    <div class="packing-grid">
+        <div class="packing-category">
+            <h4>🍖 必吃肉类</h4>
+            <ul>
+                <li>羊肉串/红柳烤肉</li>
+                <li>大盘鸡（配皮带面）</li>
+                <li>手抓羊肉</li>
+                <li>烤全羊（人多再点）</li>
+                <li>架子肉</li>
+                <li>馕坑肉</li>
+            </ul>
+        </div>
+        <div class="packing-category">
+            <h4>🍜 主食面食</h4>
+            <ul>
+                <li>过油肉拌面</li>
+                <li>丁丁炒面</li>
+                <li>揪片子</li>
+                <li>烤馕（各种口味）</li>
+                <li>薄皮包子</li>
+                <li>烤包子</li>
+            </ul>
+        </div>
+        <div class="packing-category">
+            <h4>🥤 饮品甜品</h4>
+            <ul>
+                <li>新疆奶茶（咸的）</li>
+                <li>酸奶/酸奶粽子</li>
+                <li>卡瓦斯（蜂蜜饮料）</li>
+                <li>石榴汁</li>
+                <li>手工冰淇淋</li>
+                <li>哈密瓜/西瓜</li>
+            </ul>
+        </div>
+        <div class="packing-category">
+            <h4>🛒 可带特产</h4>
+            <ul>
+                <li>红枣/灰枣</li>
+                <li>核桃/巴旦木</li>
+                <li>葡萄干（各种颜色）</li>
+                <li>无花果干</li>
+                <li>薰衣草制品</li>
+                <li>新疆奶粉/奶酪</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="highlight-box">
+        <h4>💡 美食小贴士</h4>
+        <p>• 新疆菜分量很大，点菜时少点一些 &nbsp;&nbsp;• 羊肉没有膻味，放心吃</p>
+        <p>• 辣度可以调整，不能吃辣记得提前说 &nbsp;&nbsp;• 用餐时间比内地晚2小时（14:00午餐，20:00晚餐）</p>
+    </div>
+</div>
+
+<!-- 重要提醒 -->
+<div class="slide slide-white">
+    <h2>⚠️ 重要提醒</h2>
+    
+    <div class="warning-box">
+        <strong>1. 独库公路通车确认</strong><br>
+        出发前务必关注"新疆交警"公众号，确认独库公路北段是否通车。如未通车，需调整D6-D7行程绕行。
+    </div>
+    
+    <div class="warning-box">
+        <strong>2. 时差调整</strong><br>
+        新疆用北京时间，但实际作息时间比内地晚2小时。日出约6:30，日落约21:30，晚上10点天还亮着是正常的。
+    </div>
+    
+    <div class="warning-box">
+        <strong>3. 网络信号</strong><br>
+        城市4G/5G正常，但景区、独库公路部分路段信号弱或无信号。提前下载离线地图，备好现金。
+    </div>
+    
+    <div class="warning-box">
+        <strong>4. 加油</strong><br>
+        新疆加油站需要身份证验证才能进入。遇到加油站就加满，不要等油灯亮了再找（有些路段加油站间隔很远）。
+    </div>
+    
+    <div class="warning-box">
+        <strong>5. 安检</strong><br>
+        新疆安检很严，进入城市、酒店、景区、加油站都需要安检。随身携带身份证，配合检查即可。
+    </div>
+    
+    <div class="tips-box">
+        <h4>📞 紧急联系</h4>
+        <ul>
+            <li>报警：110 &nbsp;&nbsp;|&nbsp;&nbsp; 急救：120 &nbsp;&nbsp;|&nbsp;&nbsp; 交通事故：122</li>
+            <li>新疆旅游投诉：0991-8888</li>
+        </ul>
+    </div>
+</div>
+
+<!-- 结束页 -->
+<div class="slide footer-slide">
+    <h2>祝 Hazel & Amber & Friends 新疆之旅愉快！</h2>
+    <p style="font-size: 1.4em; margin: 35px 0; line-height: 2; opacity: 0.95;">
+        愿丹丹、婷婷、莲莲、小黑<br>
+        看到最美的风景，收获最难忘的回忆<br>
+        一路平安，满载而归
+    </p>
+    <div style="width: 80px; height: 3px; background: rgba(255,255,255,0.5); margin: 30px auto;"></div>
+    <p style="opacity: 0.8; font-size: 1em;">
+        🦞 龙井的龙虾 制作<br>
+        2026年5月
+    </p>
+</div>
+
+</body>
+</html>
